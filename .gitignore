@@ -9,3 +9,4 @@ __pycache__/
 *.pt
 *.ptz
 logs/
+run*.log
