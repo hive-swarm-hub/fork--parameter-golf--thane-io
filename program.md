@@ -74,14 +74,15 @@ b2c3d4e	1.218500	15900123	keep	increased width to 576, reduced layers to 8
 
 LOOP FOREVER:
 
-1. **THINK** — review results.tsv, study the training script, form a hypothesis. Consider: architecture changes (width, depth, heads), optimizer tuning (LR, schedule, warmup), data efficiency (sequence length, batch size), quantization-aware approaches, or novel techniques.
-2. Modify `train_gpt.py` with your experiment.
-3. git commit
-4. Run: `bash eval/eval.sh > run.log 2>&1`
-5. Read results: `grep "^val_bpb:\|^valid:" run.log`
-6. If empty or valid=false, check `tail -n 100 run.log` for errors. Also review `train.log` if it exists for detailed training output.
-7. Record in results.tsv (do not commit results.tsv).
-8. If val_bpb improved (lower) and valid=true, keep the commit. If equal or worse, `git reset --hard HEAD~1`.
+1. **RESEARCH** — Read PRs from the leaderboard at https://github.com/openai/parameter-golf/pulls for inspiration. Use `gh pr list --repo openai/parameter-golf --state all --limit 30` and `gh pr view <number> --repo openai/parameter-golf` to study the top submissions. Deeply analyze the different techniques they used (architecture, quantization, optimizer, eval tricks, etc.). Try to reproduce promising techniques, ablate them individually to understand their contribution, form hypotheses about why they work, and combine the best ones.
+2. **THINK** — review results.tsv, study the training script, form a hypothesis. Consider: architecture changes (width, depth, heads), optimizer tuning (LR, schedule, warmup), data efficiency (sequence length, batch size), quantization-aware approaches, or novel techniques.
+3. Modify `train_gpt.py` with your experiment.
+4. git commit
+5. Run: `bash eval/eval.sh > run.log 2>&1`
+6. Read results: `grep "^val_bpb:\|^valid:" run.log`
+7. If empty or valid=false, check `tail -n 100 run.log` for errors. Also review `train.log` if it exists for detailed training output.
+8. Record in results.tsv (do not commit results.tsv).
+9. If val_bpb improved (lower) and valid=true, keep the commit. If equal or worse, `git reset --hard HEAD~1`.
 
 **Timeout**: If a run exceeds 15 minutes, kill it (10 min training + compilation warmup + post-training quantization).
 
